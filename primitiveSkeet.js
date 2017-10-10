@@ -12,6 +12,7 @@ $(document).ready(function(){
     width = canvas.scrollWidth;
     height = canvas.scrollHeight;
     drawBackground();
+    drawCrossHair(10,10);
 
     // Call the function update_scores() once when your game is loaded.
     //update_scores(); //Needs to be called for the High Scores API -- works?.
@@ -20,7 +21,7 @@ $(document).ready(function(){
     //    Make sure to pass a score as an argument for the function.
 });
 
-function matrix( rows, cols, defaultValue){
+function matrix(rows, cols, defaultValue){
     var M = [];
 
     //Creates Matrix M
@@ -52,6 +53,15 @@ function drawBackground(){
     ctx.fillStyle = "Green";
     ctx.beginPath();
     ctx.rect(0, height * 4 / 5, width, height);
+    ctx.stroke();
+    ctx.fill();
+}
+
+function drawCrossHair( x, y){
+    //First Rect
+    ctx.fillStyle = "Gray";
+    ctx.beginPath();
+    ctx.rect(x , y, 10 , 10);
     ctx.stroke();
     ctx.fill();
 }
