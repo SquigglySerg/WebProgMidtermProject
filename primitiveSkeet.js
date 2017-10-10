@@ -2,7 +2,9 @@ var skeetGrid = matrix(10,10,0);
 
 $(document).ready(function(){
 
-
+    // Call the function update_scores() once when your game is loaded.
+    // Call the function highscore(score) when your game ends to submit a score. 
+    //    Make sure to pass a score as an argument for the function.
 });
 
 function matrix( rows, cols, defaultValue){
