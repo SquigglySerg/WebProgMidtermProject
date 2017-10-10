@@ -1,6 +1,9 @@
 var NUM_ROWS = 10;
 var NUM_COLS = 10;
-var skeetGrid = matrix(NUM_ROWS,NUM_COLS,0);
+var MAX_ROCKS = 100;
+var rocks = matrix(1, MAX_ROCKS, 0);
+var numRocks = 0;
+var level = 1;
 var canvas;
 var ctx;
 var width;
@@ -13,6 +16,8 @@ $(document).ready(function(){
     height = canvas.scrollHeight;
     drawBackground();
     drawCrossHair(10,10);
+
+    setInterval(updateRocks, 1000);
 
     // Call the function update_scores() once when your game is loaded.
     //update_scores(); //Needs to be called for the High Scores API -- works?.
@@ -64,4 +69,27 @@ function drawCrossHair( x, y){
     ctx.rect(x , y, 10 , 10);
     ctx.stroke();
     ctx.fill();
+}
+
+function updateRocks(){
+    console.log("1");
+}
+
+function generateRocks(){
+    var numRocksToGen = level*3;
+    for(i = 0; i < numRocksToGen; i++){
+        var x = width;
+        if(getRandomInt(0, width) < width/2){
+            x = 0;
+        }
+        //x starting pos and y starting pos for the ith rock
+        rocks[numRocks] = [x, getRandomInt(0, height)];
+        numRocks = numRocks + 1;
+    }
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
