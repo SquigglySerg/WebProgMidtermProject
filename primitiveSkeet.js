@@ -1,9 +1,7 @@
 var NUM_ROWS = 10;
 var NUM_COLS = 10;
 var MAX_ROCKS = 100;
-var rocks = matrix(1, MAX_ROCKS, 0);
-var numRocks = 0;
-var level = 1;
+var rocks = new Array();
 var canvas;
 var ctx;
 var width;
@@ -17,7 +15,9 @@ $(document).ready(function(){
     drawBackground();
     drawCrossHair(10,10);
 
-    setInterval(updateRocks, 1000);
+    //setInterval(generateRock, 4000);
+    generateRock();
+    setInterval(updateRocks, 25);
 
     // Call the function update_scores() once when your game is loaded.
     //update_scores(); //Needs to be called for the High Scores API -- works?.
@@ -25,26 +25,6 @@ $(document).ready(function(){
     // Call the function highscore(score) when your game ends to submit a score. 
     //    Make sure to pass a score as an argument for the function.
 });
-
-function matrix(rows, cols, defaultValue){
-    var M = [];
-
-    //Creates Matrix M
-    for(var i=0; i < rows; i++){
-      //Creates an empty array for the row
-      M.push([]);
-
-      //Add cols to the empty row
-      M[i].push(new Array(cols));
-
-      for(var j=0; j < cols; j++){
-        //Initializes
-        M[i][j] = defaultValue;
-      }
-    }
-
-    return M;
-}
 
 function drawBackground(){
     //Sky
@@ -72,20 +52,35 @@ function drawCrossHair( x, y){
 }
 
 function updateRocks(){
-    console.log("1");
+    var v0 = 5;
+    var a0 = 3;
+    var dt = 0.01;
+
+    drawBackground();
+    for(i = 0; i < rocks.length; i++){
+        rocks[i].t = rocks[i].t + dt;
+        //Position = x0 + v0_x*t - A_x*t^2
+        rocks[i].x = rocks[i].x + 1*rocks[i].t;
+        rocks[i].y = rocks[i].y - v0*rocks[i].t + a0*rocks[i].t*rocks[i].t;
+
+        if(rocks[i].x < width){
+            //Draw rock
+            ctx.fillStyle = "Gray";
+            ctx.beginPath();
+            ctx.rect(rocks[i].x , rocks[i].y, 10 , 10);
+            ctx.stroke();
+            ctx.fill();
+        }
+        else{
+            //remove rocks[i] //Missed rocks so end game maybe?
+            rocks.shift();
+        }
+    }
 }
 
-function generateRocks(){
-    var numRocksToGen = level*3;
-    for(i = 0; i < numRocksToGen; i++){
-        var x = width;
-        if(getRandomInt(0, width) < width/2){
-            x = 0;
-        }
-        //x starting pos and y starting pos for the ith rock
-        rocks[numRocks] = [x, getRandomInt(0, height)];
-        numRocks = numRocks + 1;
-    }
+function generateRock(){
+    console.log("Rock Generated")
+    rocks.push({x:0, y:getRandomInt(height/2,height*3/4), angle:getRandomInt(10,80), t:0})
 }
 
 function getRandomInt(min, max) {
