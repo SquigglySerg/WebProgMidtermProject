@@ -42,15 +42,6 @@ function drawBackground(){
     ctx.fill();
 }
 
-function drawCrossHair( x, y){
-    //First Rect
-    ctx.fillStyle = "Gray";
-    ctx.beginPath();
-    ctx.rect(x , y, 10 , 10);
-    ctx.stroke();
-    ctx.fill();
-}
-
 function updateRocks(){
     var v0 = 2.0 + 0.250*level;  //2.00 2.25 2.50 2.75 3.00 3.25 3.50 3.75 4.00 4.25 4.50...
     var a0 = 0.5 + 0.125*level;  //0.50 0.63 0.75 0.83 1.00 1.13 1.25 1.33 1.50 1.63 1.75...
@@ -60,9 +51,7 @@ function updateRocks(){
     for(i = 0; i < rocks.length; i++){
         rocks[i].t = rocks[i].t + dt;
         //Position = x0 + v0_x*t - A_x*t^2
-        //rocks[i].x = rocks[i].x + v0*Math.cos(rocks[i].angle)*rocks[i].t;
-        //rocks[i].y = rocks[i].y - v0*Math.sin(rocks[i].angle)*rocks[i].t + a0*rocks[i].t*rocks[i].t;
-        
+        //Time step so position = oldPosition + dPosition/dt
         rocks[i].x = rocks[i].x + v0*Math.cos(rocks[i].angle);
         rocks[i].y = rocks[i].y - v0*Math.sin(rocks[i].angle) + a0*2*rocks[i].t;
 
@@ -87,11 +76,11 @@ function generateRock(){
 }
 
 function degsToRads(degrees) {
-  return degrees * Math.PI / 180;
+    return degrees * Math.PI / 180;
 }
 
 function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
