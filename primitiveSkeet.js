@@ -21,6 +21,10 @@ $(document).ready(function(){
     setInterval(generateRock, 4000);
     setInterval(updateRocks, 25);
 
+    //YOU GUYS HAVE TO IMPLEMENT SHOOTING AND LEVEL PROGRESSION
+    //UPDATE THE level VARIBLE BY 1 AND RESET THE rocksGeneratedForLevel VAR to 0
+    //THE GAME WILL SPEED UP BASED ON THE LEVEL AND HAVE LONGER LEVELS
+
     // Call the function update_scores() once when your game is loaded.
     //update_scores(); //Needs to be called for the High Scores API -- works?.
 
@@ -73,7 +77,7 @@ function updateRocks(){
 }
 
 function generateRock(){
-    if(rocksGeneratedForLevel <= ROCK_PER_LEVEL*(level+1)){
+    if(rocksGeneratedForLevel <= MATH.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*(level+1)/2))){
         rocks.push({x:0, y:getRandomInt(height/2,height*3/4), angle:degsToRads(getRandomInt(30,80)), t:0})
         rocksGeneratedForLevel = rocksGeneratedForLevel + 1;
     }
