@@ -1,8 +1,10 @@
 var NUM_ROWS = 10;
 var NUM_COLS = 10;
 var MAX_ROCKS = 100;
+var ROCK_PER_LEVEL = 5;
 var rocks = new Array();
 var level = 0;
+var rocksGeneratedForLevel = 0;
 var canvas;
 var ctx;
 var width;
@@ -15,8 +17,8 @@ $(document).ready(function(){
     height = canvas.scrollHeight;
     drawBackground();
 
-    //setInterval(generateRock, 4000);
     generateRock();
+    setInterval(generateRock, 4000);
     setInterval(updateRocks, 25);
 
     // Call the function update_scores() once when your game is loaded.
@@ -71,8 +73,10 @@ function updateRocks(){
 }
 
 function generateRock(){
-    console.log("Rock Generated")
-    rocks.push({x:0, y:getRandomInt(height/2,height*3/4), angle:degsToRads(getRandomInt(30,80)), t:0})
+    if(rocksGeneratedForLevel <= ROCK_PER_LEVEL*(level+1)){
+        rocks.push({x:0, y:getRandomInt(height/2,height*3/4), angle:degsToRads(getRandomInt(30,80)), t:0})
+        rocksGeneratedForLevel = rocksGeneratedForLevel + 1;
+    }
 }
 
 function degsToRads(degrees) {
