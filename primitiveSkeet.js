@@ -13,7 +13,6 @@ $(document).ready(function(){
     width = canvas.scrollWidth;
     height = canvas.scrollHeight;
     drawBackground();
-    drawCrossHair(10,10);
 
     //setInterval(generateRock, 4000);
     generateRock();
@@ -60,8 +59,8 @@ function updateRocks(){
     for(i = 0; i < rocks.length; i++){
         rocks[i].t = rocks[i].t + dt;
         //Position = x0 + v0_x*t - A_x*t^2
-        rocks[i].x = rocks[i].x + 1*rocks[i].t;
-        rocks[i].y = rocks[i].y - v0*rocks[i].t + a0*rocks[i].t*rocks[i].t;
+        rocks[i].x = rocks[i].x + v0*Math.cos(rocks[i].angle)*rocks[i].t;
+        rocks[i].y = rocks[i].y - v0*Math.sin(rocks[i].angle)*rocks[i].t + a0*rocks[i].t*rocks[i].t;
 
         if(rocks[i].x < width){
             //Draw rock
@@ -80,7 +79,11 @@ function updateRocks(){
 
 function generateRock(){
     console.log("Rock Generated")
-    rocks.push({x:0, y:getRandomInt(height/2,height*3/4), angle:getRandomInt(10,80), t:0})
+    rocks.push({x:0, y:getRandomInt(height/2,height*3/4), angle:degsToRads(getRandomInt(30,80)), t:0})
+}
+
+function degsToRads(degrees) {
+  return degrees * Math.PI / 180;
 }
 
 function getRandomInt(min, max) {
