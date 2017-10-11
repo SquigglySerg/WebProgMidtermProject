@@ -2,6 +2,7 @@ var NUM_ROWS = 10;
 var NUM_COLS = 10;
 var MAX_ROCKS = 100;
 var rocks = new Array();
+var level = 0;
 var canvas;
 var ctx;
 var width;
@@ -51,16 +52,19 @@ function drawCrossHair( x, y){
 }
 
 function updateRocks(){
-    var v0 = 5;
-    var a0 = 3;
+    var v0 = 2.0 + 0.250*level;  //2.00 2.25 2.50 2.75 3.00 3.25 3.50 3.75 4.00 4.25 4.50...
+    var a0 = 0.5 + 0.125*level;  //0.50 0.63 0.75 0.83 1.00 1.13 1.25 1.33 1.50 1.63 1.75...
     var dt = 0.01;
 
     drawBackground();
     for(i = 0; i < rocks.length; i++){
         rocks[i].t = rocks[i].t + dt;
         //Position = x0 + v0_x*t - A_x*t^2
-        rocks[i].x = rocks[i].x + v0*Math.cos(rocks[i].angle)*rocks[i].t;
-        rocks[i].y = rocks[i].y - v0*Math.sin(rocks[i].angle)*rocks[i].t + a0*rocks[i].t*rocks[i].t;
+        //rocks[i].x = rocks[i].x + v0*Math.cos(rocks[i].angle)*rocks[i].t;
+        //rocks[i].y = rocks[i].y - v0*Math.sin(rocks[i].angle)*rocks[i].t + a0*rocks[i].t*rocks[i].t;
+        
+        rocks[i].x = rocks[i].x + v0*Math.cos(rocks[i].angle);
+        rocks[i].y = rocks[i].y - v0*Math.sin(rocks[i].angle) + a0*2*rocks[i].t;
 
         if(rocks[i].x < width){
             //Draw rock
