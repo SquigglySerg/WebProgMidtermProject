@@ -1,5 +1,5 @@
 #skeetCanvas {
-    background-color: cyan;
+    background-color: #57B1FF;
     padding-left: 0;
     padding-right: 0;
     margin-left: auto;
@@ -15,12 +15,12 @@
 #banner {
 	text-align: center;
 	font-size: 200%;
-	Color: blue;
+	Color: black;
 	
 }
 
 Body{
-	background-color: Black;
+	background-color: white;
 	
 	
 }

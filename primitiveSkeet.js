@@ -58,14 +58,14 @@ $(document).ready(function(){
 
 function drawBackground(){
     //Sky
-    ctx.fillStyle = "Blue";
+    ctx.fillStyle = "#57B1FF";
     ctx.beginPath();
     ctx.rect(0, 0, width, height);
     ctx.stroke();
     ctx.fill();
     
     //Floor
-    ctx.fillStyle = "Green";
+    ctx.fillStyle = "#ABD24C";
     ctx.beginPath();
     ctx.rect(0, height * 4 / 5, width, height);
     ctx.stroke();
@@ -94,6 +94,9 @@ function generateRock(){
     if(rocksGeneratedForLevel < Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2))){
         rocks.push({x:0, y:getRandomInt(height/2,height*3/4), angle:degsToRads(getRandomInt(30,80)), t:0})
         rocksGeneratedForLevel = rocksGeneratedForLevel + 1;
+
+        var audio = new Audio('sounds/Catapult-SoundBible.com-829548288.mp3');
+        audio.play();
     }
 }
 
