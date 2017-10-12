@@ -16,6 +16,8 @@ $(document).ready(function(){
     ctx = canvas.getContext("2d");
     width = canvas.scrollWidth;
     height = canvas.scrollHeight;
+    crossHair.x = width/2;
+    crossHair.y = height/2;
     draw();
 
     generateRock();
@@ -89,7 +91,7 @@ function updateRocks(){
 }
 
 function generateRock(){
-    if(rocksGeneratedForLevel <= Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*(level+1)/2))){
+    if(rocksGeneratedForLevel < Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2))){
         rocks.push({x:0, y:getRandomInt(height/2,height*3/4), angle:degsToRads(getRandomInt(30,80)), t:0})
         rocksGeneratedForLevel = rocksGeneratedForLevel + 1;
     }
