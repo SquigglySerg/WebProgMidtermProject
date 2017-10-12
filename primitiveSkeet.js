@@ -10,6 +10,10 @@ var ctx;
 var width;
 var height;
 var crossHair = {x:0, y:0};
+var win = false;
+var lose = false;
+var score = 0;
+var ammo = 10;
 
 $(document).ready(function(){
     canvas = document.getElementById("skeetCanvas");
@@ -18,6 +22,7 @@ $(document).ready(function(){
     height = canvas.scrollHeight;
     crossHair.x = width/2;
     crossHair.y = height/2;
+    
     draw();
 
     generateRock();
@@ -38,13 +43,19 @@ $(document).ready(function(){
             crossHair.x+=10;
         }
         else if(event.which == 32){
+            ammo -= 1;
             //if on the same range of rock delete rock add score subtract ammo
             wasRockHit();
+
+            if(ammo == 0) {
+                window.alert("Game Over");
+            }
             //else if miss subtract ammo
             var audio = new Audio('sounds/shotgun-mossberg590-RA_The_Sun_God-451502290.mp3');
             audio.play();
         }
     });
+
 
     //YOU GUYS HAVE TO IMPLEMENT SHOOTING AND LEVEL PROGRESSION
     //UPDATE THE level VARIBLE BY 1 AND RESET THE rocksGeneratedForLevel VAR to 0
@@ -55,6 +66,22 @@ $(document).ready(function(){
 
     // Call the function highscore(score) when your game ends to submit a score. 
     //    Make sure to pass a score as an argument for the function.
+
+if(win) {
+    //show win screen 
+}
+
+if(lose) {
+    // show lose screen
+}
+
+
+
+
+
+
+
+
 });
 
 function wasRockHit(){
@@ -63,6 +90,7 @@ function wasRockHit(){
         if(crossHair.x < rocks[i].x && crossHair.x + 200 > rocks[i].x + 10){
             if(crossHair.y < rocks[i].y && crossHair.y + 200 > rocks[i].y + 10){
                 rocks.splice(i,1); //remove the ith rock
+                score += 1;
                 
             }
         }
@@ -149,8 +177,18 @@ function drawRocks(){
     }
 }
 
+function drawScore() {
+    ctx.fillText("Score: " + score, 10, 10);
+}
+
+function drawAmmo() {
+    ctx.fillText("Ammo: " + ammo, 10, 20);
+}
+
 function draw(){
     drawBackground();
     drawCrossHair();
     drawRocks();
+    drawScore();
+    drawAmmo();
 }
