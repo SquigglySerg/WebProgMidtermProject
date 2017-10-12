@@ -9,17 +9,39 @@ var canvas;
 var ctx;
 var width;
 var height;
+var crossHair = {x:0, y:0};
 
 $(document).ready(function(){
     canvas = document.getElementById("skeetCanvas");
     ctx = canvas.getContext("2d");
     width = canvas.scrollWidth;
     height = canvas.scrollHeight;
-    drawBackground();
+    draw();
 
     generateRock();
     setInterval(generateRock, 4000);
     setInterval(updateRocks, 25);
+
+    $(document).keydown(function(event) {
+        if(event.which == 38){
+            crossHair.y-=10;
+        }
+        else if(event.which == 40){
+            crossHair.y+=10;
+        }
+        else if(event.which == 37){
+            crossHair.x-=10;
+        }
+        else if(event.which == 39){
+            crossHair.x+=10;
+        }
+        else if(event.which == 32){
+            //if on the same range of rock delete rock add score subtract ammo
+
+            //else if miss subtract ammo
+
+        }
+    });
 
     //YOU GUYS HAVE TO IMPLEMENT SHOOTING AND LEVEL PROGRESSION
     //UPDATE THE level VARIBLE BY 1 AND RESET THE rocksGeneratedForLevel VAR to 0
@@ -53,7 +75,6 @@ function updateRocks(){
     var a0 = 0.5 + 0.125*level;  //0.50 0.63 0.75 0.83 1.00 1.13 1.25 1.33 1.50 1.63 1.75...
     var dt = 0.01;
 
-    drawBackground();
     for(i = 0; i < rocks.length; i++){
         rocks[i].t = rocks[i].t + dt;
         //Position = x0 + v0_x*t - A_x*t^2
@@ -61,19 +82,10 @@ function updateRocks(){
         rocks[i].x = rocks[i].x + v0*Math.cos(rocks[i].angle);
         rocks[i].y = rocks[i].y - v0*Math.sin(rocks[i].angle) + a0*2*rocks[i].t;
 
-        if(rocks[i].x < width){
-            //Draw rock
-            ctx.fillStyle = "Gray";
-            ctx.beginPath();
-            ctx.rect(rocks[i].x , rocks[i].y, 10 , 10);
-            ctx.stroke();
-            ctx.fill();
-        }
-        else{
-            //remove rocks[i] //Missed rocks so end game maybe?
-            rocks.shift();
-        }
+        
     }
+
+    draw();
 }
 
 function generateRock(){
@@ -91,4 +103,36 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+}
+
+function drawCrossHair() {
+    var img = new Image();
+    img.src = 'Images/Crosshair1.png';
+
+    img.onload = function() {
+        ctx.drawImage(img, crossHair.x, crossHair.y , 30, 30);
+    }
+}
+
+function drawRocks(){
+    for(i = 0; i < rocks.length; i++){
+        if(rocks[i].x < width){
+            //Draw rock
+            ctx.fillStyle = "Gray";
+            ctx.beginPath();
+            ctx.rect(rocks[i].x , rocks[i].y, 10 , 10);
+            ctx.stroke();
+            ctx.fill();
+        }
+        else{
+            //remove rocks[i] //Missed rocks so end game maybe?
+            rocks.shift();
+        }
+    }
+}
+
+function draw(){
+    drawBackground();
+    drawCrossHair();
+    drawRocks();
 }
