@@ -39,9 +39,10 @@ $(document).ready(function(){
         }
         else if(event.which == 32){
             //if on the same range of rock delete rock add score subtract ammo
-
+            wasRockHit();
             //else if miss subtract ammo
-
+            var audio = new Audio('sounds/shotgun-mossberg590-RA_The_Sun_God-451502290.mp3');
+            audio.play();
         }
     });
 
@@ -55,6 +56,18 @@ $(document).ready(function(){
     // Call the function highscore(score) when your game ends to submit a score. 
     //    Make sure to pass a score as an argument for the function.
 });
+
+function wasRockHit(){
+    for(i = 0; i < rocks.length; i++){
+        //crossHair 200*200 rock rock size is 10*10
+        if(crossHair.x < rocks[i].x && crossHair.x + 200 > rocks[i].x + 10){
+            if(crossHair.y < rocks[i].y && crossHair.y + 200 > rocks[i].y + 10){
+                rocks.splice(i,1); //remove the ith rock
+                
+            }
+        }
+    }
+}
 
 function drawBackground(){
     //Sky
