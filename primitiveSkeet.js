@@ -14,6 +14,8 @@ var win = false;
 var lose = false;
 var score = 0;
 var ammo = 10;
+var rockHit=0;
+var rockMiss=0;
 
 $(document).ready(function(){
     canvas = document.getElementById("skeetCanvas");
@@ -47,15 +49,36 @@ $(document).ready(function(){
             //if on the same range of rock delete rock add score subtract ammo
             wasRockHit();
 
-            if(ammo == 0) {
-                window.alert("Game Over");
-            }
+
             //else if miss subtract ammo
             var audio = new Audio('sounds/shotgun-mossberg590-RA_The_Sun_God-451502290.mp3');
             audio.play();
         }
+
+	if ((rockHit+rockMiss) == (Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2)))){
+		level+=1;
+		ammo+=5;
+		rockHit=0;
+		rockMiss=0;
+		rocksGeneratedForLevel=0;
+	}
+	
+	if (level == 2){
+		window.alert("WIN");
+		win =true;
+	}
+	
+	if (ammo == 0){
+		window.alert("LOSE");
+		lose =true;
+		
+	}
+
+	
     });
 
+
+	
 
     //YOU GUYS HAVE TO IMPLEMENT SHOOTING AND LEVEL PROGRESSION
     //UPDATE THE level VARIBLE BY 1 AND RESET THE rocksGeneratedForLevel VAR to 0
@@ -67,6 +90,9 @@ $(document).ready(function(){
     // Call the function highscore(score) when your game ends to submit a score. 
     //    Make sure to pass a score as an argument for the function.
 
+	
+	
+	
 if(win) {
     //show win screen 
 }
@@ -87,10 +113,11 @@ if(lose) {
 function wasRockHit(){
     for(i = 0; i < rocks.length; i++){
         //crossHair 200*200 rock rock size is 10*10
-        if(crossHair.x < rocks[i].x && crossHair.x + 200 > rocks[i].x + 10){
-            if(crossHair.y < rocks[i].y && crossHair.y + 200 > rocks[i].y + 10){
+        if(crossHair.x < rocks[i].x && crossHair.x + 30 > rocks[i].x + 10){
+            if(crossHair.y < rocks[i].y && crossHair.y + 30 > rocks[i].y + 10){
                 rocks.splice(i,1); //remove the ith rock
                 score += 1;
+				rockHit+=1;
                 
             }
         }
@@ -169,10 +196,15 @@ function drawRocks(){
             ctx.rect(rocks[i].x , rocks[i].y, 10 , 10);
             ctx.stroke();
             ctx.fill();
-        }
-        else{
-            //remove rocks[i] //Missed rocks so end game maybe?
+        }else{
+		//remove rocks[i] //Missed rocks so end game maybe?
             rocks.shift();
+		}
+		
+        if (rocks[i].y>height){
+            
+			rocks.splice(i,1); //remove the ith rock          
+			rockMiss+=1;
         }
     }
 }
@@ -185,10 +217,25 @@ function drawAmmo() {
     ctx.fillText("Ammo: " + ammo, 10, 20);
 }
 
+function drawHit() {
+    ctx.fillText("Hit: " + rockHit, 10, 30);
+}
+
+function drawMiss() {
+    ctx.fillText("Miss: " + rockMiss, 10, 40);
+}
+
+function drawLv() {
+    ctx.fillText("Level: " + level + " rocks this level "+ (Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2))), 10, 50);
+}
+
 function draw(){
     drawBackground();
     drawCrossHair();
     drawRocks();
     drawScore();
+	drawHit();
+	drawMiss();
     drawAmmo();
+	drawLv();
 }
