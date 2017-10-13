@@ -181,15 +181,15 @@ function drawRocks(){
             ctx.rect(rocks[i].x , rocks[i].y, 10 , 10);
             ctx.stroke();
             ctx.fill();
+		
+			if (rocks[i].y > height){
+				rocks.splice(i,1); //remove the ith rock          
+				rockMiss+=1;
+			}
         }
         else{
 	    	//remove rocks[i] //Missed rocks
             rocks.splice(i,1);         
-	    	rockMiss+=1;
-        }
-		
-        if (rocks[i].y>height){
-            rocks.splice(i,1); //remove the ith rock          
 	    	rockMiss+=1;
         }
     }
