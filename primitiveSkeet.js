@@ -15,14 +15,23 @@ var score = 0;
 var ammo = 10;
 var rockHit=0;
 var rockMiss=0;
+var genRock;
+var upRock;
 
 // pause game until click start
-
+//document.getElementById("instructions").onclick = function() {window.alert("here")};
 $(document).ready(function(){
+    
+    $("#instructions").click(function() {
+        $("#instructions").fadeOut(1000, function() {
+        })
+        // I moved the rock generations in here so that it will only generate after the title screen in gone        
+        generateRock();
+        genRock = setInterval(generateRock, 4000);
+        upRock = setInterval(updateRocks, 25);
+    });
+
     // this removes the title screen when it is double clicked
-    $("#instructions").dblclick(function() {
-        $("#instructions").fadeOut();
-    })
     //update_scores();
     canvas = document.getElementById("skeetCanvas");
     ctx = canvas.getContext("2d");
@@ -31,12 +40,7 @@ $(document).ready(function(){
     crossHair.x = width/2;
     crossHair.y = height/2;
     
-    //if(!win && !lose) {draw()};
-
-
-    generateRock();
-    var genRock = setInterval(generateRock, 4000);
-    var upRock = setInterval(updateRocks, 25);
+    draw();
 
     $(document).keydown(function(event) {
         if(event.which == 38){
@@ -69,7 +73,8 @@ $(document).ready(function(){
 	}
 	
 	if (level == MAX_LEVEL){
-                clearInterval();
+                clearInterval(genRock);
+                clearInterval(upRock);
 	        drawEnd();
 	}
 	
@@ -94,7 +99,7 @@ $(document).ready(function(){
         $("#screen2").fadeOut(1000, function() {
             location.reload();
         })
-    })
+    });
 });
 
 function wasRockHit(){
