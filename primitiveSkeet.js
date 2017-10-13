@@ -2,7 +2,7 @@ var NUM_ROWS = 10;
 var NUM_COLS = 10;
 var MAX_ROCKS = 100;
 var ROCK_PER_LEVEL = 5;
-var MAX_LEVEL = 3;
+var MAX_LEVEL = 5;
 var rocks = new Array();
 var level = 0;
 var rocksGeneratedForLevel = 0;
@@ -17,6 +17,7 @@ var rockHit=0;
 var rockMiss=0;
 var genRock;
 var upRock;
+var start = false;
 
 // pause game until click start
 //document.getElementById("instructions").onclick = function() {window.alert("here")};
@@ -25,7 +26,7 @@ $(document).ready(function(){
     $("#instructions").click(function() {
         $("#instructions").fadeOut(1000, function() {
         })
-        // I moved the rock generations in here so that it will only generate after the title screen in gone        
+        outputLevel();
         generateRock();
         genRock = setInterval(generateRock, 4000);
         upRock = setInterval(updateRocks, 25);
@@ -40,7 +41,7 @@ $(document).ready(function(){
     crossHair.x = width/2;
     crossHair.y = height/2;
     
-    draw();
+    //draw();
 
     $(document).keydown(function(event) {
         if(event.which == 38){
@@ -70,6 +71,7 @@ $(document).ready(function(){
 		rockHit=0;
 		rockMiss=0;
 		rocksGeneratedForLevel=0;
+	        outputLevel();
 	}
 	
 	if (level == MAX_LEVEL){
@@ -229,6 +231,13 @@ function drawEnd() {
 function drawEndNoAmmo() {
     document.getElementById("screen2").innerHTML = "Game Over<br/>You Ran Out of Ammo!<br/>You scored " + score + " point(s)!<br/> Double click here to PLAY AGAIN."; 
     $("#screen2").fadeIn();
+}
+
+function outputLevel() {
+    document.getElementById("level").innerHTML = "Level " + (level + 1); 
+    $("#levelUp").fadeIn(2000, function() {
+        $("#levelUp").fadeOut();   
+    })
 }
 
 
