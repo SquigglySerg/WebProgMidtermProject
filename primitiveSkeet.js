@@ -66,8 +66,8 @@ $(document).ready(function(){
         }
 
 	if ((rockHit+rockMiss) == (Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2)))){
-		level+=(Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2))) + 3; //This is to give enough ammo for each round + 3 extra ammo
-		ammo+=10;
+		level+=1;
+		ammo+=(Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2))) + 3; //This is to give enough ammo for each round + 3 extra ammo
 		rockHit=0;
 		rockMiss=0;
 		rocksGeneratedForLevel=0;
