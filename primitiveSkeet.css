@@ -1,4 +1,7 @@
 #skeetCanvas {
+    position: absolute;
+    right: 0;
+    left: 0;
     background-color: #57B1FF;
     padding-left: 0;
     padding-right: 0;
@@ -8,9 +11,30 @@
     border: 1px black solid;
     width: 80%;
     height: 400px;
-
 }
 
+#startimg {
+    position: absolute;
+    right: 0;
+    left: 0;
+    background-color: black;
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right:auto;
+    border: 1px black solid;
+    width: 80%;
+    height: 400px;
+    z-index: 10;
+    font-size: 50px;
+    color: white;
+    text-align: center;
+}
+
+#title {
+    top: 50%;
+
+}
 
 #banner {
 	text-align: center;

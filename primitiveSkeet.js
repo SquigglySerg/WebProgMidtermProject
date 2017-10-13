@@ -17,6 +17,15 @@ var ammo = 10;
 var rockHit=0;
 var rockMiss=0;
 
+// pause game until click start
+/*$.holdReady(true);
+
+    $("#startimg").dblclick(function() {
+        $("#startimg").fadeOut(1000, function() {
+            $.holdReady(false);
+        })
+    })
+*/
 $(document).ready(function(){
     canvas = document.getElementById("skeetCanvas");
     ctx = canvas.getContext("2d");
@@ -25,7 +34,8 @@ $(document).ready(function(){
     crossHair.x = width/2;
     crossHair.y = height/2;
     
-    draw();
+    //draw();
+
 
     generateRock();
     setInterval(generateRock, 4000);
@@ -45,14 +55,12 @@ $(document).ready(function(){
             crossHair.x+=10;
         }
         else if(event.which == 32){
-            ammo -= 1;
             //if on the same range of rock delete rock add score subtract ammo
             wasRockHit();
-
-
             //else if miss subtract ammo
             var audio = new Audio('sounds/shotgun-mossberg590-RA_The_Sun_God-451502290.mp3');
             audio.play();
+            ammo -= 1;
         }
 
 	if ((rockHit+rockMiss) == (Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2)))){
@@ -63,15 +71,21 @@ $(document).ready(function(){
 		rocksGeneratedForLevel=0;
 	}
 	
-	if (level == 2){
-		window.alert("WIN");
-		win =true;
+	if (level == 1){
+	        drawEndImage();
+		//window.alert("WIN");
+	        //$.holdReady(true); //trying to pause the game, show the winning screen and to reset the game, just double click the screen.
+		win = true;
+	        //$("#startimg").fadeIn();
+	        //location.reload();
 	}
 	
 	if (ammo == 0){
-		window.alert("LOSE");
-		lose =true;
-		
+	        drawEndImage();
+		//window.alert("LOSE");
+	        //$.holdReady(true); //Same as winning screen
+		lose = true;
+	        //location.reload();	
 	}
 
 	
@@ -93,20 +107,11 @@ $(document).ready(function(){
 	
 	
 	
-if(win) {
-    //show win screen 
-}
-
-if(lose) {
-    // show lose screen
-}
-
-
-
-
-
-
-
+    $("#startimg").dblclick(function() {
+        $("#startimg").fadeOut(1000, function() {
+            location.reload();
+        })
+    })
 
 });
 
@@ -117,7 +122,7 @@ function wasRockHit(){
             if(crossHair.y < rocks[i].y && crossHair.y + 30 > rocks[i].y + 10){
                 rocks.splice(i,1); //remove the ith rock
                 score += 1;
-				rockHit+=1;
+		rockHit+=1;
                 
             }
         }
@@ -155,7 +160,7 @@ function updateRocks(){
         
     }
 
-    draw();
+   if(!win && !lose) {draw()};
 }
 
 function generateRock(){
@@ -196,15 +201,15 @@ function drawRocks(){
             ctx.rect(rocks[i].x , rocks[i].y, 10 , 10);
             ctx.stroke();
             ctx.fill();
-        }else{
-		//remove rocks[i] //Missed rocks so end game maybe?
+        }
+        else{
+	    //remove rocks[i] //Missed rocks so end game maybe?
             rocks.shift();
-		}
+        }
 		
         if (rocks[i].y>height){
-            
-			rocks.splice(i,1); //remove the ith rock          
-			rockMiss+=1;
+            rocks.splice(i,1); //remove the ith rock          
+	    rockMiss+=1;
         }
     }
 }
@@ -229,13 +234,18 @@ function drawLv() {
     ctx.fillText("Level: " + level + " rocks this level "+ (Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2))), 10, 50);
 }
 
+function drawEndImage() {
+    document.getElementById("startimg").innerHTML = "Congratulation!<br/>You scored " + score + " point(s)!<br/> Double click here to PLAY AGAIN."; 
+    $("#startimg").fadeIn();
+}
+
 function draw(){
     drawBackground();
     drawCrossHair();
     drawRocks();
     drawScore();
-	drawHit();
-	drawMiss();
+    drawHit();
+    drawMiss();
     drawAmmo();
-	drawLv();
+    drawLv();
 }
