@@ -23,7 +23,7 @@ var start = false;
 //document.getElementById("instructions").onclick = function() {window.alert("here")};
 $(document).ready(function(){
     
-    $("#instructions").click(function() {
+    $("#instructions").dblclick(function() {
         $("#instructions").fadeOut(1000, function() {
         })
         outputLevel();
@@ -41,7 +41,7 @@ $(document).ready(function(){
     crossHair.x = width/2;
     crossHair.y = height/2;
     
-    //draw();
+    //draw(); //The game runs fine without this here
 
     $(document).keydown(function(event) {
         if(event.which == 38){
