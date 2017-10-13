@@ -36,8 +36,8 @@ $(document).ready(function(){
     //update_scores();
     canvas = document.getElementById("skeetCanvas");
     ctx = canvas.getContext("2d");
-    width = canvas.scrollWidth;
-    height = canvas.scrollHeight;
+    width = canvas.width;
+    height = canvas.height;
     crossHair.x = width/2;
     crossHair.y = height/2;
 
