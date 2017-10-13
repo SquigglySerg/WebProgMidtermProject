@@ -23,16 +23,16 @@ var start = false;
 //document.getElementById("instructions").onclick = function() {window.alert("here")};
 $(document).ready(function(){
     
-    $("#instructions").dblclick(function() {
+    $("#instructions").dblclick(function() { // this removes the title screen when it is double clicked
         $("#instructions").fadeOut(1000, function() {
         })
         outputLevel();
         generateRock();
         genRock = setInterval(generateRock, 4000);
         upRock = setInterval(updateRocks, 25);
+        start = true;
     });
 
-    // this removes the title screen when it is double clicked
     //update_scores();
     canvas = document.getElementById("skeetCanvas");
     ctx = canvas.getContext("2d");
@@ -40,62 +40,54 @@ $(document).ready(function(){
     height = canvas.scrollHeight;
     crossHair.x = width/2;
     crossHair.y = height/2;
-    
-    //draw(); //The game runs fine without this here
 
     $(document).keydown(function(event) {
-        if(event.which == 38){
-            crossHair.y-=10;
-        }
-        else if(event.which == 40){
-            crossHair.y+=10;
-        }
-        else if(event.which == 37){
-            crossHair.x-=10;
-        }
-        else if(event.which == 39){
-            crossHair.x+=10;
-        }
-        else if(event.which == 32){
-            //if on the same range of rock delete rock add score subtract ammo
-            wasRockHit();
-            //else if miss subtract ammo
-            var audio = new Audio('sounds/shotgun-mossberg590-RA_The_Sun_God-451502290.mp3');
-            audio.play();
-            ammo -= 1;
-        }
+    	if(start){
+			if(event.which == 38){
+				crossHair.y-=10;
+			}
+			else if(event.which == 40){
+				crossHair.y+=10;
+			}
+			else if(event.which == 37){
+				crossHair.x-=10;
+			}
+			else if(event.which == 39){
+				crossHair.x+=10;
+			}
+			else if(event.which == 32){
+				//if on the same range of rock delete rock add score subtract ammo
+				wasRockHit();
+				//else if miss subtract ammo
+				if(ammo > 0){
+					var audio = new Audio('sounds/shotgun-mossberg590-RA_The_Sun_God-451502290.mp3');
+					audio.play();
+					ammo -= 1;
+				}
+			}
+    	}
 
-	if ((rockHit+rockMiss) == (Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2)))){
-		level+=1;
-		ammo+=(Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2))) + 3; //This is to give enough ammo for each round + 3 extra ammo
-		rockHit=0;
-		rockMiss=0;
-		rocksGeneratedForLevel=0;
-	        outputLevel();
-	}
-	
-	if (level == MAX_LEVEL){
-                clearInterval(genRock);
-                clearInterval(upRock);
-	        drawEnd();
-	}
-	
-	if (ammo == 0){
-                clearInterval(genRock);
-                clearInterval(upRock);
-	        drawEndNoAmmo();
-	}
+		if ((rockHit+rockMiss) == (Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2)))){
+			level+=1;
+			ammo+=(Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2))) + 3; //This is to give enough ammo for each round + 3 extra ammo
+			rockHit=0;
+			rockMiss=0;
+			rocksGeneratedForLevel=0;
+				outputLevel();
+		}
+
+		if (level == MAX_LEVEL){
+					clearInterval(genRock);
+					clearInterval(upRock);
+				drawEnd();
+		}
+
+		if (ammo == 0){
+					clearInterval(genRock);
+					clearInterval(upRock);
+				drawEndNoAmmo();
+		}
     });
-
-    //YOU GUYS HAVE TO IMPLEMENT SHOOTING AND LEVEL PROGRESSION
-    //UPDATE THE level VARIBLE BY 1 AND RESET THE rocksGeneratedForLevel VAR to 0
-    //THE GAME WILL SPEED UP BASED ON THE LEVEL AND HAVE LONGER LEVELS
-
-    // Call the function update_scores() once when your game is loaded.
-   // update_scores(); //Needs to be called for the High Scores API -- works?.
-
-    // Call the function highscore(score) when your game ends to submit a score. 
-    //    Make sure to pass a score as an argument for the function.
 	
     $("#screen2").dblclick(function() {
         $("#screen2").fadeOut(1000, function() {
@@ -191,13 +183,14 @@ function drawRocks(){
             ctx.fill();
         }
         else{
-	    //remove rocks[i] //Missed rocks so end game maybe?
-            rocks.shift();
+	    	//remove rocks[i] //Missed rocks
+            rocks.splice(i,1);         
+	    	rockMiss+=1;
         }
 		
         if (rocks[i].y>height){
             rocks.splice(i,1); //remove the ith rock          
-	    rockMiss+=1;
+	    	rockMiss+=1;
         }
     }
 }

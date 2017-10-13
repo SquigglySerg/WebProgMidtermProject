@@ -1,22 +1,3 @@
-<!--
-
-    Your game must be comprised of a single webpage named index.html.
-    Your page should be properly structured using HTML5 using the proper doctype and canvas tag.
-    Include at least 3 CSS3 features such as animations, text effects, or transitions.
-    Place your styling in an external stylesheet appropriately.
-    Place your game logic in an external JavaScript file.
-    Your webpage should look visually appealing.
-    Your game must be dynamic enough to require a fair amount of JavaScript 
-        (i.e., one simple JavaScript function is not sufficient).
-    Your game incorporates the High Score API and the High Score table is displayed on the page.
-    Include a README.txt file to justify why your project is worth 100 points... 
-        What CSS3 features did you use? Did you use any cool JavaScript libraries? 
-        What nifty features of your program were a bear to implement?
-    Your HTML and CSS must pass all three validation services (HTML, CSS, WCAG 2.0 AA).
-    Include a thumbnail.png file that will be used as the icon for your game.
-
--->
-
 <!DOCTYPE html>
 <html lang="en-US">
     <head>
@@ -32,50 +13,48 @@
 		<title>Primitive Skeet</title>
 	</head>
 	<body>
-            <div>
-                <!--<img id="startimg" src="Images/end.jpg" alt="ready" style="position: absolute; z-index: 10;
-                    margin-left: auto; margin-right: auto; display: none;">-->
-                    <div id="instructions">
-                        <h5>Welcome to Primitive Skeet!<br/>
-                            To Move: Use arrow keys<br/>
-                            To Shoot: Spacebar<br/>
-                            How to Play: Shoot down as many rocks as possible until you reach the
-                            last level or run out of ammo.<br/> 
-                            There are 10 Levels but can you reach
-                            that far?<br/>
-                            Double Click here to Start Playing!
-                        </h5>
-                    </div>
-                    <div id="screen2" style="display: none">
-                        <h3 id="end">Welcome to Primitive Skeet!</h3>
-                    </div>
-                    <div id="levelUp" style="display: none">
-                        <h5 id="level">Level 1</h5>
-                    </div>
-                <div id="game">
-	            <section id="banner">
-                        Primitive Skeet
-	            </section>
-	            <canvas id="skeetCanvas" style="border:1px solid #d3d3d3;" height="400px" width="800px">
-                    </canvas>
-	            <div id="highdiv">
-		        <table id="hightable">
-				<tr>
-					<th>User</th>
-					<th>Score</th>
-				</tr>
+		<div>
+			<div id="instructions">
+				<h5>Welcome to Primitive Skeet!<br/>
+					To Move: Use arrow keys<br/>
+					To Shoot: Spacebar<br/>
+					How to Play: Shoot down as many rocks as possible until you reach the
+					last level or run out of ammo.<br/> 
+					There are 10 Levels but can you reach
+					that far?<br/>
+					Double Click here to Start Playing!
+				</h5>
+			</div>
+			<div id="screen2" style="display: none">
+				<h3 id="end">Welcome to Primitive Skeet!</h3>
+			</div>
+			<div id="levelUp" style="display: none">
+				<h5 id="level">Level 1</h5>
+			</div>
+			<div id="game">
+				<section id="banner">
+					Primitive Skeet
+				</section>
+				<canvas id="skeetCanvas" style="border:1px solid #d3d3d3;" height="400" width="800">
+				</canvas>
+			</div>
+			<div id="highdiv">
+				<table id="hightable">
+					<tr>
+						<th>User</th>
+						<th>Score</th>
+					</tr>
 
-			</table>
-			<table id="myhightable">
-				<tr>
-					<th colspan="2">Your High Score</th>
-				</tr>
-				<tr id="myhighscore">
-					<td colspan="2">You don't have one yet!</td>
-				</tr>
-			</table>
-		    </div>
-                </div>
-            </div>
+				</table>
+				<table id="myhightable">
+					<tr>
+						<th colspan="2">Your High Score</th>
+					</tr>
+					<tr id="myhighscore">
+						<td colspan="2">You don't have one yet!</td>
+					</tr>
+				</table>
+			</div>
+		</div>
 	</body>
 </html>
