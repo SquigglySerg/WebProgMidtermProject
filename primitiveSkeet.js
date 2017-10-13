@@ -24,7 +24,7 @@ var start = false;
 $(document).ready(function(){
     
     $("#instructions").dblclick(function() { // this removes the title screen when it is double clicked
-        $("#instructions").fadeOut(1000);
+        $("#instructions").fadeOut(100);
         update_scores();
         outputLevel();
         generateRock();
