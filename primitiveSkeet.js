@@ -25,6 +25,7 @@ $(document).ready(function(){
     
     $("#instructions").dblclick(function() { // this removes the title screen when it is double clicked
         $("#instructions").fadeOut(1000);
+        update_scores();
         outputLevel();
         generateRock();
         genRock = setInterval(generateRock, 4000);
@@ -79,12 +80,14 @@ $(document).ready(function(){
 					clearInterval(genRock);
 					clearInterval(upRock);
 				drawEnd();
+                                highscores(score);
 		}
 
 		if (ammo == 0){
 					clearInterval(genRock);
 					clearInterval(upRock);
 				drawEndNoAmmo();
+		                highscores(score);
 		}
     });
 	
