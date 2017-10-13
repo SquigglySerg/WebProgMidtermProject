@@ -23,7 +23,7 @@ var start = false;
 //document.getElementById("instructions").onclick = function() {window.alert("here")};
 $(document).ready(function(){
     
-    $("#instructions").dblclick(function() { // this removes the title screen when it is double clicked
+    $("#button1").click(function() { // this removes the title screen when it is double clicked
         $("#instructions").fadeOut(100);
         update_scores();
         outputLevel();
@@ -91,7 +91,7 @@ $(document).ready(function(){
 		}
     });
 	
-    $("#screen2").dblclick(function() {
+    $("#button2").click(function() {
     	location.reload();
     });
 });
@@ -217,12 +217,12 @@ function drawLv() {
 }
 
 function drawEnd() {
-    document.getElementById("screen2").innerHTML = "Game Over!<br/>You Reached the End of the Game<br/>You scored " + score + " point(s)!<br/> Double click here to PLAY AGAIN."; 
+    document.getElementById("end").innerHTML = "Game Over!<br/>You Reached the End of the Game<br/>You scored " + score + " point(s)!"; 
     $("#screen2").fadeIn();
 }
 
 function drawEndNoAmmo() {
-    document.getElementById("screen2").innerHTML = "Game Over<br/>You Ran Out of Ammo!<br/>You scored " + score + " point(s)!<br/> Double click here to PLAY AGAIN."; 
+    document.getElementById("end").innerHTML = "Game Over<br/>You Ran Out of Ammo!<br/>You scored " + score + " point(s)!"; 
     $("#screen2").fadeIn();
 }
 
