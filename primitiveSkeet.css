@@ -71,10 +71,13 @@
 
 #button1:hover, #button2:hover {
     background-color: yellow;
+    animation-name: spin;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
 }
 
-Body{
-	background-color: white;
-	
-	
+@keyframes spin {
+    from{transform:rotateY(0deg);}
+    to{transform:rotateY(360deg);}
 }
+
