@@ -80,14 +80,14 @@ $(document).ready(function(){
 					clearInterval(genRock);
 					clearInterval(upRock);
 				drawEnd();
-                                highscores(score);
+                                highscore(score);
 		}
 
 		if (ammo == 0){
 					clearInterval(genRock);
 					clearInterval(upRock);
 				drawEndNoAmmo();
-		                highscores(score);
+		                highscore(score);
 		}
     });
 	
