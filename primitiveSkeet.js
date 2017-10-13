@@ -2,7 +2,7 @@ var NUM_ROWS = 10;
 var NUM_COLS = 10;
 var MAX_ROCKS = 100;
 var ROCK_PER_LEVEL = 5;
-var MAX_LEVEL = 5;
+var MAX_LEVEL = 10;
 var rocks = new Array();
 var level = 0;
 var rocksGeneratedForLevel = 0;
@@ -66,7 +66,7 @@ $(document).ready(function(){
         }
 
 	if ((rockHit+rockMiss) == (Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2)))){
-		level+=1;
+		level+=(Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2))) + 3; //This is to give enough ammo for each round + 3 extra ammo
 		ammo+=10;
 		rockHit=0;
 		rockMiss=0;
