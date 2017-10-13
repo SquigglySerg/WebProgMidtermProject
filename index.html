@@ -35,16 +35,25 @@
             <div>
                 <!--<img id="startimg" src="Images/end.jpg" alt="ready" style="position: absolute; z-index: 10;
                     margin-left: auto; margin-right: auto; display: none;">-->
-                    <div id="startimg" style="display: none"><h3 id="title">Welcome to Primitive Skeet!</h1></div> 
-           <div id="game">
-	   <section id="banner">
-            Primitive Skeet
-	   </section>
-	   <canvas id="skeetCanvas" style="border:1px solid #d3d3d3;" height="400px" width="800px">
-
-	   </canvas>
-	   <div id="highdiv">
-			<table id="hightable">
+                    <div id="instructions">
+                        <h5>Welcome to Primitive Skeet!<br/>
+                            To Move: Use arrow keys<br/>
+                            To Shoot: Spacebar<br/>
+                            How to Play: Shoot down as many rocks as possible until you reach the
+                            last level or run out of ammo.
+                        </h5>
+                    </div>
+                    <div id="screen2" style="display: none">
+                        <h3 id="end">Welcome to Primitive Skeet!</h3>
+                    </div>
+                <div id="game">
+	            <section id="banner">
+                        Primitive Skeet
+	            </section>
+	            <canvas id="skeetCanvas" style="border:1px solid #d3d3d3;" height="400px" width="800px">
+                    </canvas>
+	            <div id="highdiv">
+		        <table id="hightable">
 				<tr>
 					<th>User</th>
 					<th>Score</th>
@@ -59,8 +68,8 @@
 					<td colspan="2">You don't have one yet!</td>
 				</tr>
 			</table>
-		</div>
-           </div>
+		    </div>
+                </div>
             </div>
 	</body>
 </html>

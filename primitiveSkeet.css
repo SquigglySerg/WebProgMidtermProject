@@ -13,10 +13,11 @@
     height: 400px;
 }
 
-#startimg {
+#screen2, #instructions {
     position: absolute;
     right: 0;
     left: 0;
+    top: 40px;
     background-color: black;
     padding-left: 0;
     padding-right: 0;

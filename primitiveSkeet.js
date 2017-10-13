@@ -2,6 +2,7 @@ var NUM_ROWS = 10;
 var NUM_COLS = 10;
 var MAX_ROCKS = 100;
 var ROCK_PER_LEVEL = 5;
+var MAX_LEVEL = 3;
 var rocks = new Array();
 var level = 0;
 var rocksGeneratedForLevel = 0;
@@ -10,23 +11,19 @@ var ctx;
 var width;
 var height;
 var crossHair = {x:0, y:0};
-var win = false;
-var lose = false;
 var score = 0;
 var ammo = 10;
 var rockHit=0;
 var rockMiss=0;
 
 // pause game until click start
-/*$.holdReady(true);
 
-    $("#startimg").dblclick(function() {
-        $("#startimg").fadeOut(1000, function() {
-            $.holdReady(false);
-        })
-    })
-*/
 $(document).ready(function(){
+    // this removes the title screen when it is double clicked
+    $("#instructions").dblclick(function() {
+        $("#instructions").fadeOut();
+    })
+    //update_scores();
     canvas = document.getElementById("skeetCanvas");
     ctx = canvas.getContext("2d");
     width = canvas.scrollWidth;
@@ -34,12 +31,12 @@ $(document).ready(function(){
     crossHair.x = width/2;
     crossHair.y = height/2;
     
-    //draw();
+    //if(!win && !lose) {draw()};
 
 
     generateRock();
-    setInterval(generateRock, 4000);
-    setInterval(updateRocks, 25);
+    var genRock = setInterval(generateRock, 4000);
+    var upRock = setInterval(updateRocks, 25);
 
     $(document).keydown(function(event) {
         if(event.which == 38){
@@ -65,54 +62,39 @@ $(document).ready(function(){
 
 	if ((rockHit+rockMiss) == (Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2)))){
 		level+=1;
-		ammo+=5;
+		ammo+=10;
 		rockHit=0;
 		rockMiss=0;
 		rocksGeneratedForLevel=0;
 	}
 	
-	if (level == 1){
-	        drawEndImage();
-		//window.alert("WIN");
-	        //$.holdReady(true); //trying to pause the game, show the winning screen and to reset the game, just double click the screen.
-		win = true;
-	        //$("#startimg").fadeIn();
-	        //location.reload();
+	if (level == MAX_LEVEL){
+                clearInterval();
+	        drawEnd();
 	}
 	
 	if (ammo == 0){
-	        drawEndImage();
-		//window.alert("LOSE");
-	        //$.holdReady(true); //Same as winning screen
-		lose = true;
-	        //location.reload();	
+                clearInterval(genRock);
+                clearInterval(upRock);
+	        drawEndNoAmmo();
 	}
-
-	
     });
-
-
-	
 
     //YOU GUYS HAVE TO IMPLEMENT SHOOTING AND LEVEL PROGRESSION
     //UPDATE THE level VARIBLE BY 1 AND RESET THE rocksGeneratedForLevel VAR to 0
     //THE GAME WILL SPEED UP BASED ON THE LEVEL AND HAVE LONGER LEVELS
 
     // Call the function update_scores() once when your game is loaded.
-    //update_scores(); //Needs to be called for the High Scores API -- works?.
+   // update_scores(); //Needs to be called for the High Scores API -- works?.
 
     // Call the function highscore(score) when your game ends to submit a score. 
     //    Make sure to pass a score as an argument for the function.
-
 	
-	
-	
-    $("#startimg").dblclick(function() {
-        $("#startimg").fadeOut(1000, function() {
+    $("#screen2").dblclick(function() {
+        $("#screen2").fadeOut(1000, function() {
             location.reload();
         })
     })
-
 });
 
 function wasRockHit(){
@@ -123,7 +105,6 @@ function wasRockHit(){
                 rocks.splice(i,1); //remove the ith rock
                 score += 1;
 		rockHit+=1;
-                
             }
         }
     }
@@ -160,7 +141,7 @@ function updateRocks(){
         
     }
 
-   if(!win && !lose) {draw()};
+    draw();
 }
 
 function generateRock(){
@@ -215,6 +196,7 @@ function drawRocks(){
 }
 
 function drawScore() {
+    ctx.fillStyle = "#ffffff";
     ctx.fillText("Score: " + score, 10, 10);
 }
 
@@ -227,17 +209,23 @@ function drawHit() {
 }
 
 function drawMiss() {
-    ctx.fillText("Miss: " + rockMiss, 10, 40);
+    ctx.fillText("Rock Missed: " + rockMiss, 10, 40);
 }
 
 function drawLv() {
-    ctx.fillText("Level: " + level + " rocks this level "+ (Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2))), 10, 50);
+    ctx.fillText("Level: " + (level+1) + " :Rocks this level: "+ (Math.ceil(ROCK_PER_LEVEL + (ROCK_PER_LEVEL*level/2))), 10, 50);
 }
 
-function drawEndImage() {
-    document.getElementById("startimg").innerHTML = "Congratulation!<br/>You scored " + score + " point(s)!<br/> Double click here to PLAY AGAIN."; 
-    $("#startimg").fadeIn();
+function drawEnd() {
+    document.getElementById("screen2").innerHTML = "Game Over!<br/>You Reached the End of the Game<br/>You scored " + score + " point(s)!<br/> Double click here to PLAY AGAIN."; 
+    $("#screen2").fadeIn();
 }
+
+function drawEndNoAmmo() {
+    document.getElementById("screen2").innerHTML = "Game Over<br/>You Ran Out of Ammo!<br/>You scored " + score + " point(s)!<br/> Double click here to PLAY AGAIN."; 
+    $("#screen2").fadeIn();
+}
+
 
 function draw(){
     drawBackground();
