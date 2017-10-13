@@ -24,8 +24,7 @@ var start = false;
 $(document).ready(function(){
     
     $("#instructions").dblclick(function() { // this removes the title screen when it is double clicked
-        $("#instructions").fadeOut(1000, function() {
-        })
+        $("#instructions").fadeOut(1000);
         outputLevel();
         generateRock();
         genRock = setInterval(generateRock, 4000);
@@ -90,9 +89,7 @@ $(document).ready(function(){
     });
 	
     $("#screen2").dblclick(function() {
-        $("#screen2").fadeOut(1000, function() {
-            location.reload();
-        })
+    	location.reload();
     });
 });
 
@@ -230,7 +227,7 @@ function outputLevel() {
     document.getElementById("level").innerHTML = "Level " + (level + 1); 
     $("#levelUp").fadeIn(2000, function() {
         $("#levelUp").fadeOut();   
-    })
+    });
 }
 
 
