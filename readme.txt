@@ -22,7 +22,7 @@ CSS3 Features:
 
 Nifty Features that were a Bear to Implement:
     1) Rock generations and launches: This feature has new rocks being generated for each level
-    to be launched at random angles. The speed of the launch also increases as the level
+    to be launched at random curves. The speed of the launch also increases as the level
     increases.
     2) Implementing the title screen without the game playing in the background was difficult. We
     wanted to have a title screen with instructions so that new players will know how to play the
